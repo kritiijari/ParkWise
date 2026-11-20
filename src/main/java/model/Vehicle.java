@@ -16,4 +16,12 @@ public abstract class Vehicle {
     public int getEntryHour() {
         return entryHour;
     }
+
+    public int computeHours(int exitHour) {
+        return Math.max(1, exitHour - entryHour);
+    }
+
+    public abstract double computeFee(int exitHour);
+
+    public abstract String getCategory();
 }
