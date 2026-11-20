@@ -62,7 +62,31 @@ public class Main {
                     double fee = service.releaseSlot(plate, ticket, exitHour);
 
                     System.out.println("Freed Slot #" + ticket.getSlotId() + ". Fee due: Rs. " + fee);
+                } else if (choice == 3) {
+                    System.out.println("\n=== Occupancy Report ===");
+                    System.out.println("Active Vehicles: " + service.getActiveCount() + " / " + TOTAL_SLOTS);
+                    for (ParkingTicket t : service.getActiveTickets()) {
+                        Vehicle v = t.getVehicle();
+                        System.out.println("Slot #" + t.getSlotId() + " -> [" + v.getCategory() + "] "
+                                + v.getPlateNumber() + " (Entry: " + v.getEntryHour() + "h)");
+                    }
 
+                    int settledCount = service.getSettledCount();
+                    if (settledCount > 0) {
+                        double[] settledFees = service.getSettledFees();
+                        String[] settledPlates = service.getSettledPlates();
+                        double[] copyFees = new double[settledCount];
+                        String[] copyPlates = new String[settledCount];
+                        for (int i = 0; i < settledCount; i++) {
+                            copyFees[i] = settledFees[i];
+                            copyPlates[i] = settledPlates[i];
+                        }
+                        FeeSorter.sortByFeeDescending(copyFees, copyPlates, settledCount);
+                        System.out.println("\n=== Settled Exits (Sorted High to Low Fee) ===");
+                        for (int i = 0; i < settledCount; i++) {
+                            System.out.println((i + 1) + ". " + copyPlates[i] + " - Rs. " + copyFees[i]);
+                        }
+                    }
                 } else if (choice == 4) {
                     System.out.println("Closing system.");
                     break;
