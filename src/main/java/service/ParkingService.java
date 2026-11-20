@@ -40,7 +40,8 @@ public class ParkingService {
             throw new VehicleNotFoundException("Plate " + plate + " is not currently parked.");
         }
         return ticket;
-        
+    }
+
     public double releaseSlot(String plate, ParkingTicket ticket, int exitHour) {
         double fee = ticket.getVehicle().computeFee(exitHour);
         slotOccupied[ticket.getSlotId() - 1] = false;
@@ -53,5 +54,24 @@ public class ParkingService {
         }
         return fee;
     }
+
+    public Collection<ParkingTicket> getActiveTickets() {
+        return activeTickets.values();
+    }
+
+    public int getActiveCount() {
+        return activeTickets.size();
+    }
+
+    public double[] getSettledFees() {
+        return settledFees;
+    }
+
+    public String[] getSettledPlates() {
+        return settledPlates;
+    }
+
+    public int getSettledCount() {
+        return settledCount;
     }
 }
