@@ -29,7 +29,7 @@ public class Main {
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-                        try {
+            try {
                 if (choice == 1) {
                     int freeSlot = service.findFreeSlot();
                     if (freeSlot == -1) {
@@ -51,13 +51,28 @@ public class Main {
                     service.parkVehicle(freeSlot, plate, vehicle);
                     System.out.println("Allocated Slot #" + freeSlot + " to " + plate);
 
+                } else if (choice == 2) {
+                    System.out.print("Enter license plate for exit: ");
+                    String plate = scanner.nextLine().trim().toUpperCase();
+                    System.out.print("Exit hour (0-23): ");
+                    int exitHour = scanner.nextInt();
+                    scanner.nextLine();
+
+                    ParkingTicket ticket = service.getTicket(plate);
+                    double fee = service.releaseSlot(plate, ticket, exitHour);
+
+                    System.out.println("Freed Slot #" + ticket.getSlotId() + ". Fee due: Rs. " + fee);
+
                 } else if (choice == 4) {
                     System.out.println("Closing system.");
                     break;
                 } else {
                     System.out.println("Invalid choice.");
                 }
-            } catch (LotCapacityException e) {
+            } catch (LotCapacityException | VehicleNotFoundException e) {
                 System.out.println("Exception caught: " + e.getMessage());
             }
         }
+        scanner.close();
+    }
+}
