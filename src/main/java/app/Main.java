@@ -1,5 +1,6 @@
 package app;
 
+// Console menu that drives the whole program    
 import datastructures.FeeSorter;
 import exceptions.LotCapacityException;
 import exceptions.VehicleNotFoundException;
@@ -30,6 +31,7 @@ public class Main {
             scanner.nextLine();
 
             try {
+                // Option 1: allocate a slot, or throw LotCapacityException if full
                 if (choice == 1) {
                     int freeSlot = service.findFreeSlot();
                     if (freeSlot == -1) {
@@ -43,14 +45,14 @@ public class Main {
                     System.out.print("Entry hour (0-23): ");
                     int entryHour = scanner.nextInt();
                     scanner.nextLine();
-
+                    // Ternary picks Bike or Car based on the type typed by the user
                     Vehicle vehicle = type.equals("bike")
                             ? new Bike(plate, entryHour)
                             : new Car(plate, entryHour);
 
                     service.parkVehicle(freeSlot, plate, vehicle);
                     System.out.println("Allocated Slot #" + freeSlot + " to " + plate);
-
+                    // Option 2: find the ticket, free the slot and show the fee
                 } else if (choice == 2) {
                     System.out.print("Enter license plate for exit: ");
                     String plate = scanner.nextLine().trim().toUpperCase();
@@ -62,7 +64,9 @@ public class Main {
                     double fee = service.releaseSlot(plate, ticket, exitHour);
 
                     System.out.println("Freed Slot #" + ticket.getSlotId() + ". Fee due: Rs. " + fee);
-                } else if (choice == 3) {
+                }
+                // Option 3: show active vehicles, then settled exits sorted by fee
+                else if (choice == 3) {
                     System.out.println("\n=== Occupancy Report ===");
                     System.out.println("Active Vehicles: " + service.getActiveCount() + " / " + TOTAL_SLOTS);
                     for (ParkingTicket t : service.getActiveTickets()) {
@@ -75,6 +79,7 @@ public class Main {
                     if (settledCount > 0) {
                         double[] settledFees = service.getSettledFees();
                         String[] settledPlates = service.getSettledPlates();
+                        // Sort a copy so the original fee history stays unchanged
                         double[] copyFees = new double[settledCount];
                         String[] copyPlates = new String[settledCount];
                         for (int i = 0; i < settledCount; i++) {
@@ -93,6 +98,7 @@ public class Main {
                 } else {
                     System.out.println("Invalid choice.");
                 }
+                // Catch both custom exceptions so the program doesn't crash
             } catch (LotCapacityException | VehicleNotFoundException e) {
                 System.out.println("Exception caught: " + e.getMessage());
             }

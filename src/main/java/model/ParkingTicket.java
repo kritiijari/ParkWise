@@ -1,5 +1,6 @@
 package model;
 
+// Stores one parking record: the vehicle and its slot number    
 public class ParkingTicket {
     private final int slotId;
     private final Vehicle vehicle;

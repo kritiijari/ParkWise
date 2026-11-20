@@ -1,9 +1,11 @@
 package model;
 
+//Restricts access + prevents reassignment
 public abstract class Vehicle {
     private final String plateNumber;
     private final int entryHour;
 
+    // Base class for all vehicles; stores plate number and entry hour
     public Vehicle(String plateNumber, int entryHour) {
         this.plateNumber = plateNumber.toUpperCase();
         this.entryHour = entryHour;

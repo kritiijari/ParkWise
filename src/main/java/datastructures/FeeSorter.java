@@ -1,7 +1,7 @@
 package datastructures;
 
 public class FeeSorter {
-
+    // Selector Sort(ees high to low,plates are swapped along with their fees )
     // Custom Selection Sort written without built-in sorting utilities
     public static void sortByFeeDescending(double[] fees, String[] plates, int count) {
         for (int i = 0; i < count - 1; i++) {

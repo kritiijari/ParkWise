@@ -1,5 +1,6 @@
 package model;
 
+// Child class of Vehicle (inheritance); fee rule for bikes  
 public class Bike extends Vehicle {
     private static final double HOURLY_RATE = 20.0;
 
@@ -12,6 +13,7 @@ public class Bike extends Vehicle {
         return computeHours(exitHour) * HOURLY_RATE;
     }
 
+    // Overrides computeFee with the bike rate
     @Override
     public String getCategory() {
         return "Bike";
