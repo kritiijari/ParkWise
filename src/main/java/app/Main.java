@@ -29,13 +29,35 @@ public class Main {
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-            if (choice == 4) {
-                System.out.println("Closing system.");
-                break;
-            } else {
-                System.out.println("Invalid choice.");
+                        try {
+                if (choice == 1) {
+                    int freeSlot = service.findFreeSlot();
+                    if (freeSlot == -1) {
+                        throw new LotCapacityException("All " + TOTAL_SLOTS + " slots are occupied.");
+                    }
+
+                    System.out.print("Vehicle type (car/bike): ");
+                    String type = scanner.nextLine().trim().toLowerCase();
+                    System.out.print("License plate: ");
+                    String plate = scanner.nextLine().trim().toUpperCase();
+                    System.out.print("Entry hour (0-23): ");
+                    int entryHour = scanner.nextInt();
+                    scanner.nextLine();
+
+                    Vehicle vehicle = type.equals("bike")
+                            ? new Bike(plate, entryHour)
+                            : new Car(plate, entryHour);
+
+                    service.parkVehicle(freeSlot, plate, vehicle);
+                    System.out.println("Allocated Slot #" + freeSlot + " to " + plate);
+
+                } else if (choice == 4) {
+                    System.out.println("Closing system.");
+                    break;
+                } else {
+                    System.out.println("Invalid choice.");
+                }
+            } catch (LotCapacityException e) {
+                System.out.println("Exception caught: " + e.getMessage());
             }
         }
-        scanner.close();
-    }
-}
