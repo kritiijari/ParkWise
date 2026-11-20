@@ -26,5 +26,19 @@ public class ParkingService {
             }
         }
         return -1;
+
+    }
+
+    public void parkVehicle(int freeSlot, String plate, Vehicle vehicle) {
+        slotOccupied[freeSlot - 1] = true;
+        activeTickets.put(plate, new ParkingTicket(freeSlot, vehicle));
+    }
+
+    public ParkingTicket getTicket(String plate) throws VehicleNotFoundException {
+        ParkingTicket ticket = activeTickets.get(plate);
+        if (ticket == null) {
+            throw new VehicleNotFoundException("Plate " + plate + " is not currently parked.");
+        }
+        return ticket;
     }
 }
