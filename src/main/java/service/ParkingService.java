@@ -40,5 +40,18 @@ public class ParkingService {
             throw new VehicleNotFoundException("Plate " + plate + " is not currently parked.");
         }
         return ticket;
+        
+    public double releaseSlot(String plate, ParkingTicket ticket, int exitHour) {
+        double fee = ticket.getVehicle().computeFee(exitHour);
+        slotOccupied[ticket.getSlotId() - 1] = false;
+        activeTickets.remove(plate);
+
+        if (settledCount < settledFees.length) {
+            settledFees[settledCount] = fee;
+            settledPlates[settledCount] = plate;
+            settledCount++;
+        }
+        return fee;
+    }
     }
 }
