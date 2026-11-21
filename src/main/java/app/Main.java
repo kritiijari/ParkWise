@@ -42,6 +42,10 @@ public class Main {
                     String type = scanner.nextLine().trim().toLowerCase();
                     System.out.print("License plate: ");
                     String plate = scanner.nextLine().trim().toUpperCase();
+                    if (service.isParked(plate)) {
+                        System.out.println("Vehicle " + plate + " is already parked.");
+                        continue;
+                    }
                     System.out.print("Entry hour (0-23): ");
                     int entryHour = scanner.nextInt();
                     scanner.nextLine();

@@ -61,6 +61,7 @@ public class ParkingService {
         return fee;
     }
 
+    // Getters used by the occupancy report
     public Collection<ParkingTicket> getActiveTickets() {
         return activeTickets.values();
     }
@@ -79,5 +80,9 @@ public class ParkingService {
 
     public int getSettledCount() {
         return settledCount;
+    }
+
+    public boolean isParked(String plate) {
+        return activeTickets.containsKey(plate);
     }
 }
