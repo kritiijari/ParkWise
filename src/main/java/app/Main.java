@@ -64,9 +64,9 @@ public class Main {
                     double fee = service.releaseSlot(plate, ticket, exitHour);
 
                     System.out.println("Freed Slot #" + ticket.getSlotId() + ". Fee due: Rs. " + fee);
-                }
-                // Option 3: show active vehicles, then settled exits sorted by fee
-                else if (choice == 3) {
+
+                    // Option 3: show active vehicles, then settled exits sorted by fee
+                } else if (choice == 3) {
                     System.out.println("\n=== Occupancy Report ===");
                     System.out.println("Active Vehicles: " + service.getActiveCount() + " / " + TOTAL_SLOTS);
                     for (ParkingTicket t : service.getActiveTickets()) {
